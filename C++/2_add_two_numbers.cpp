@@ -56,7 +56,7 @@ public:
 };
 
 // driver
-int main(){
+int main() {
     ListNode *l1 = new ListNode(6), *l2 = new ListNode(5);
     Solution s;
 
