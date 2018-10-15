@@ -1,6 +1,8 @@
 #include <string>
 #include <unordered_map>
 #include <algorithm>
+#include <cstdlib>
+#include <iostream>
 using namespace std;
 
 class Solution {
@@ -18,22 +20,23 @@ public:
         substr[s[0]] = 0;
 
         // loop through the string
-        while (tail < s.size()) {
+        while (tail < s.size() && head < s.size()) {
             // check if the tail is included in the substring
-            auto search_char = substr.find(s[tail]);
+            auto char_pos = substr.find(s[tail]);
 
             // yes, then shrink the substring
-            if (search_char != substr.end())
-                head = s[tail] + 1;
-            // no, then expand the substring  
-            else
+            if (char_pos != substr.end()){
+                substr.erase(s[head]);
+                head += 1;
+            }
+            // no, then expand the substring
+            else {
+                substr[s[tail]] = tail;
                 tail += 1;
 
-            // update the hash table
-            substr[s[tail]] = tail;
-
-            // update the max length
-            max_length = max(max_length, tail - head);
+                // update the max length
+                max_length = max(max_length, tail - head);
+            }
         }
 
         return max_length;
@@ -42,5 +45,11 @@ public:
 
 // driver
 int main() {
+    string s = "pwwkew";
 
+    Solution sol;
+    cout << sol.lengthOfLongestSubstring(s) << endl;
+
+    system("pause");
+    return 0;
 }
