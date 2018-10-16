@@ -1,4 +1,5 @@
 #include <string>
+#include <vector>
 #include <unordered_map>
 #include <algorithm>
 #include <cstdlib>
@@ -25,10 +26,8 @@ public:
             auto char_pos = substr.find(s[tail]);
 
             // yes, then shrink the substring
-            if (char_pos != substr.end()){
-                substr.erase(s[head]);
-                head += 1;
-            }
+            if (char_pos != substr.end() && substr[s[tail]] >= head)
+                head = substr[s[tail]] + 1;
             // no, then expand the substring
             else {
                 substr[s[tail]] = tail;
