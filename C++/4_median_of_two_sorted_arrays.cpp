@@ -7,7 +7,44 @@ using namespace std;
 class Solution {
 public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        // initialize
+        int totalLength = nums1.size() + nums2.size();
+        int numOfMedians = 0;
+        if (totalLength % 2)
+            numOfMedians = 1;
+        else
+            numOfMedians = 2;
         
+        // loop to cut unnecessary half of a array
+        int i1 = 0, j1 = nums1.size() - 1, i2 = 0, j2 = nums2.size() - 1, medianIdx = totalLength / 2;
+        while (true) {
+            int len1 = i1 - j1 + 1, len2 = i2 - j2 + 1;
+            if (len1 + len2 == numOfMedians) {
+                if (numOfMedians == 1) {
+                    if (len1)
+                        return nums1[i1];
+                    else
+                        return nums2[i2];
+                }
+                else
+                    return (double) (nums1[i1] + nums2[i2]) / 2;
+            }
+            int medianIdx1 = len1 / 2, medianIdx2 = len2 / 2;
+            int median1 = nums1[medianIdx1], median2 = nums2[medianIdx2];
+            if (medianIdx1 + medianIdx2 < medianIdx) {
+                if (median1 > median2)
+                    i2 += medianIdx2 + 1;
+                else
+                    i1 += medianIdx1 + 1;
+            }
+            else {
+                if (median1 > median2)
+                    j1 -= medianIdx1 + 1;
+                else
+                    j2 -= medianIdx2 + 1;
+            }
+        }
+
     }
 };
 
